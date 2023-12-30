@@ -1,0 +1,11 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    text-align: center;
+}
+#root{
+    background-color: rgb(120, 55, 180);
+    width: 100vw;
+    height: 100vh;
+}

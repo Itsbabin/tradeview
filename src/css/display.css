@@ -1,0 +1,41 @@
+.container{
+    height: 80vh;
+    width: 80vw;
+    background-color: rgb(76, 4, 116);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+.chart{
+    height: 517px;
+    width: 90%;
+    background-color:rgb(255, 255, 255) ;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+.candel_container{
+    /* background-color: rgba(90, 161, 143, 0.395); */
+    flex-shrink: 0;
+    height: 100%;
+    width: 30px;
+    margin-inline: 3px;
+    display: flex;
+    align-items: first;
+}
+.body{
+    background-color: green;
+    width: 30px;
+    height: 200px;
+}
+.shadow{
+    background-color: black;
+    width: 3px;
+    height: 300px;
+    margin: auto;
+    display: none;
+}
