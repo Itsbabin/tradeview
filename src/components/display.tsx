@@ -1,70 +1,46 @@
-import { useEffect, useState } from 'react'
-import '../css/display.css'
-import Candel from './candel'
-// import axios from 'axios'
-
-type candelData = {
-  open: number
-  high: number
-  low:  number
-  volume:  number
-  close:  number
-  time:  number
-}
+import "../css/display.css";
+import Candel from "./candel";
+import axios from "axios";
 
 export default function Display() {
-  const URL = "https://public.coindcx.com/market_data/candles?pair=B-BTC_USDT&interval=15m&limit=20"
-  const [data , setdata] = useState([]);
-  const [highOfMarket, setHighOfMarket] = useState(0);
-  const [lowOfMarket, setlowOfMarket] = useState(99999999);
+  var data = JSON.stringify({
+    "clientcode":"babin",
+    "password":"Babin&bubun2004",
+	"totp":"TOTP_CODE"
+});
+  var config = {
+    method: "post",
+    url: "https://apiconnect.angelbroking.com/rest/secure/angelbroking/historical/v1/getCandleData",
+    headers: {
+      "X-PrivateKey": "b681vnNy",
+      Accept: "application/json, application/json",
+      "X-SourceID": "WEB, WEB",
+      "X-ClientLocalIP": "192.168.53.34",
+      "X-ClientPublicIP": "2409:40e1:8:5bde:7320:f818:e00e:69d",
+      "X-MACAddress": "EB605414-5BA4-417D-83C3-FB6B483F25AB",
+      "X-UserType": "USER",
+      Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ4OD MiLCJyb2xlcyI6MCwidXNlcnR5cGUiOiJVU0VSIiwia WF0IjoxNTk5NzEyNjk4LCJleHAiOjE1OTk3MjE2OTh 9.qHZEkOMokMktybarQO3m4NMRVQlF0vvN7rh2lC Rkjd2sCYBq3JnOq0yWWOS5Ux_H0pvvt4-ibSmb5H JoKJHOUw",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
 
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
- const setHighandLow = (arr : Array<candelData>) => {
-   let tempLow = 99999999;
-   let tempHigh = 0;
-  for (let i = 0; i < arr.length; i++) {
-    const e:candelData = arr[i];
-    if(tempHigh < e.high){
-      tempHigh = e.high;
-    }
-    if(tempLow > e.low){
-      tempLow = e.low
-    }
-  }
-  setlowOfMarket(tempLow);
-  setHighOfMarket(tempHigh);
- }
-
-  const getdata = async () => {
-       await fetch(URL, {
-        method: "GET"})
-       .then( async (response) => {
-         const recivedata = await response.json();
-         setHighandLow(recivedata);
-         setdata(recivedata)
-       })
-       .catch((err) =>{
-        console.log(err)
-       })
-  }
-  useEffect(() => {
-    getdata();
-    console.log(`high : ${highOfMarket} and low : ${lowOfMarket}`);
-  }, [])
-  
   return (
     <>
-     <div className="container">
+      <div className="container">
         <div className="chart">
-          {
-            data.map((e : candelData) => {
-              return <Candel key={e.time} data={e} high={highOfMarket} low={lowOfMarket} />
-            })
-          }
+          <Candel />
         </div>
-     </div>
-     <div className="show">
-     </div>
+      </div>
+      <div className="show"></div>
     </>
-  )
+  );
 }
